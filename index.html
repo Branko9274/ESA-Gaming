@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.column {
+  float: left;
+  width: 22%;
+  hight: 100%;
+  padding: 0 10px;
+}
+
+.row {margin: 0 -5px;}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.card {
+  box-shadow: 30 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: green;
+}
+</style>
+</head>
+<body>
+
+<h2>Cards on the deck</h2>
+
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <h3>Deck of cards</h3>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Card herc</h3>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <h3>Card pick</h3>
+    </div>
+  </div>
+    
+<script>
+
+var Cards;
+
+function Game() {
+    Cards = new component(30, 30, "red", 10, 120);
+    Area.start();
+}
+
+var Area = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 500;
+        this.canvas.height = 600;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = Area.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;        
+    }    
+}
+
+function updateGameArea() {
+    Area.clear();
+    Cards.newPos();    
+    Cards.update();
+}
+
+function up() {
+    Cards.speedY = 2; 
+}
+
+function down() {
+    Cards.speedY = 2; 
+}
+
+function left() {
+    Cards.speedX = 2; 
+}
+
+function right() {
+    Cards.speedX = 3; 
+}
+
+function clear() {
+    Cards.speedX = 0; 
+    Cards.speedY = 0; 
+}
+</script>
+<div style="text-align:center;width:480px;">
+  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
+  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
+  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">RESTART</button>
+</div>
+
+<style>
+
+</body>
+</html>
